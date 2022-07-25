@@ -6,6 +6,7 @@ let db;
 const connectMongo = async () => {
     try{
         const client = await MongoClient.connect(process.env.DATABASE_MONGO_URL);
+        console.log(client)
         db = client.db("gestionGastos");
         return client;
     }
