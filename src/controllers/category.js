@@ -2,7 +2,7 @@ const category = require("../models/category");
 
 const getAllCategories = async (req,res,next) => {
     try{
-        const allCategories = await category.getAllSCategories();
+        const allCategories = await category.getAllCategories();
         res.send(allCategories)
     }
     catch(error){
