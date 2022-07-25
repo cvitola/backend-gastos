@@ -17,9 +17,9 @@ app.use( ( req, res, next ) => {
 
 const PORT = process.env.PORT || 3000;
 
-const main = async () => {
+const startServer = async () => {
   try {
-    //await connectMongo();
+    await connectMongo();
     app.listen(PORT, () =>
       console.log(`🚀 Server ready at: http://localhost:${PORT} ⭐️`)
     );
@@ -28,4 +28,4 @@ const main = async () => {
   }
 };
 
-main();
+startServer();
