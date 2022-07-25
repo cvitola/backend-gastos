@@ -1,15 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-//const spendRouter = require("./src/routes/spend");
+const spendRouter = require("./src/routes/spend");
 
 const app = express();
 app.use(bodyParser.json());
 
-//app.use('/api/spends', spendRouter);
+app.use('/api/spends', spendRouter);
 app.use( ( req, res, next ) => {
     res.statusCode = 404;
-
     res.send("Hola Mundo");
 });
 
