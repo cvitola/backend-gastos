@@ -1,15 +1,46 @@
-//const spend = require("../models/spend");
+const spend = require("../models/spend");
 
-const getAllSpends = (req,res,next) => {
-    res.send({
-        id: 1,
-        gasto: "electrico",
-        monto: 1250.55,
-    });
+
+const getAllSpends = async (req,res,next) => {
+    try{
+        const allSpends = await spend.getAllSpends();
+        res.send(allSpends)
+    }
+    catch(error){
+        res.statusCode = 500;
+        res.send(error)
+    }
 }
 
-const createSpend = (req,res,next) => {
-    res.send("Gasto Creado");
+const createSpend = async (req,res,next) => {
+    console.log("Creating data: ", req.body);
+    if(req.body.date === "") {
+        res.statusCode = 400;
+        res.send("Field date is empty.")
+        console.log("Field Date cannot be empty")
+    }
+    if(req.body.category === "") {
+        res.statusCode = 400;
+        res.send("Field category is empty.")
+        console.log("Field Category cannot be empty")
+    }
+    if(req.body.amount === "") {
+        res.statusCode = 400;
+        res.send("Field amount is empty.")
+        console.log("Field Amount cannot be empty")
+    }
+    if(res.statusCode != 400) {
+        try {
+            const newSpend = await spend.createSpend(req.body.date, req.body.type, req.body.amount);
+            res.send(newSpend)
+        } catch (error) {
+            console.log(error);
+            res.statusCode = 500;
+            res.send(error.message)
+    }  
+    }
+
+
 }
 
 module.exports = {
