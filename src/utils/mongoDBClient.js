@@ -12,7 +12,7 @@ const connectMongo = async () => {
     }
     catch(error){
         console.log(error);
-        throw "Error connection to MongoDB"     
+        throw new Error(error + "Error connection to MongoDB")     
     }
     };        
 
