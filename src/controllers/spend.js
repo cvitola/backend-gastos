@@ -30,10 +30,11 @@ const createSpend = async (req,res,next) => {
             res.send("Field amount is empty.")
             console.log("Field Amount cannot be empty")
         }
-        if(res.statusCode != 400) {
+        res.send(req)
+       /* if(res.statusCode != 400) {
             const newSpend = await spend.createSpend(req.body.date, req.body.type, req.body.amount);
             res.send(newSpend)
-        }
+        }*/
     } catch(error){
         console.log(error);
         res.statusCode = 500;
