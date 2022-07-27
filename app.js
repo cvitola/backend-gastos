@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const spendRouter = require("./src/routes/spend");
 const categoryRouter = require("./src/routes/category");
 const connectMongo = require("./src/utils/mongoDBClient").connectMongo;
@@ -7,6 +8,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use( cors() );
 
 app.use('/api/spends', spendRouter);
 app.use('/api/category', categoryRouter);
