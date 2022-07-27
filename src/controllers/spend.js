@@ -38,6 +38,7 @@ const createSpend = async (req,res,next) => {
         console.log(error);
         res.statusCode = 500;
         res.send(error.message)
+        throw new Error(error)  
     }
 
 
