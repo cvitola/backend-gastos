@@ -29,7 +29,7 @@ const createSpend = async (req,res,next) => {
     else{
         try{
             console.log("Estoy aca dentro del Try ")
-            const newSpend = await spend.create(req.body.date, req.body.category, req.body.amount);
+            const newSpend = await spend.createSpend(req.body.date, req.body.category, req.body.amount);
             res.send(newSpend)
         } catch(err){
             console.log(err);
