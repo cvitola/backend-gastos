@@ -10,7 +10,7 @@ const registerUser = async(req,res,next) => {
         if(userBody.name === ""){
             res.statusCode = 400;
             res.send("El campo nombre debe contener información");
-        }else if(userBody.surname === ""){
+        }else if(userBody.surName === ""){
             res.statusCode = 400;
             res.send("El campo apellido debe contener información");
         }else if(userBody.email === ""){
