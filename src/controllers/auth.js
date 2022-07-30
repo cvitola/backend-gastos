@@ -6,6 +6,7 @@ const loginUser = () => {}
 const registerUser = async(req,res,next) => {
     try {
         const userBody = req.body;
+        console.log("UserBody: ")
         console.log(userBody)
         if(userBody.name === ""){
             res.statusCode = 400;
@@ -23,8 +24,10 @@ const registerUser = async(req,res,next) => {
             if(await searchUserByEmail(userBody.email)){
                     res.status(400).json({message: "El email ya existe en la BD"});
             } else {
-                const hashea = await bcrypt.hash(userBody.password, 3);
+                console.log(userBody.password)
+                const hashea = await bcrypt.hash(userBody.password, 10);
                 userBody.password = hashea
+
                 await userModel.createUser(userBody);
                 res.status(200).json({message:"Usuario creado"})
             }
@@ -32,7 +35,7 @@ const registerUser = async(req,res,next) => {
     } catch (error) {
         console.log(error);
         res.statusCode = 500;
-        throw new Error(error)
+        res.send(error.message)
     }
 }
 
