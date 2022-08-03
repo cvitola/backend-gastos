@@ -1,7 +1,38 @@
 const userModel = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const loginUser = () => {}
+const loginUser = async(req,res,next) => {
+    try {
+        const userBody = req.body;
+        const user = await searchUserByEmail(userBody.email);
+        if(user){
+            const result = await bcrypt.compare(userBody.password, user.password);
+            console.log(result)
+            if(result){
+                const token = jwt.sign(
+                    {
+                        id: user._id,
+                        firstName: user.name,
+                        lastName: user.surName,
+                        email: user.email,
+                        role: getUserRole(user)
+                    },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    {expiresIn: 2000}
+                );
+                res.status(200).json({token: token})
+            }else{
+                res.status(403).json({message:"La contraseña es incorrecta"})
+            }
+        }else{
+            res.status(403).json({message:"Error usuario es incorrecto"})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: error.message})
+    }
+}
 
 const registerUser = async(req,res,next) => {
     try {
@@ -43,6 +74,10 @@ const logoutUser = () => {}
 
 const searchUserByEmail = async(email) => {
     return await userModel.findUserByMail(email);
+}
+
+const getUserRole = (u) => {
+    return u.role === "admin" ? "admin":"none";
 }
 module.exports = { 
     loginUser,
