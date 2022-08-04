@@ -8,13 +8,14 @@ const getCollection = require("../utils/mongoDBClient").getCollection;
   ticket: imagen...PENDIENTE.
 }
 */
-const createSpend = async (date,category,amount) => {
+const createSpend = async (date,category,amount,userID) => {
     try {
       const spendsCollection = getCollection("gastos");
       const newSpend = await spendsCollection.insertOne({
         date: date,
         category: category,
-        amount: amount
+        amount: amount,
+        userID: userID
       });
   
       return newSpend;
@@ -35,6 +36,35 @@ const createSpend = async (date,category,amount) => {
     }
   }
 
-  module.exports = { createSpend, 
-                      getAllSpends
-                    }
+  const getSpendsByUser = async(userID) => {
+    try {
+      const spendsCollection = getCollection("gastos");
+      const spendsByUser = await spendsCollection.find({userID: userID}).toArray();
+      return spendsByUser;
+    } catch (error) {
+        console.log(error);
+        throw new Error (error)
+    }
+  }
+
+  const deleteSpend = async(id) => {
+    try {
+      const spendsCollection = getCollection("gastos");
+      const query = {_id: id}
+      console.log(query)
+      const deleteSp = await spendsCollection.deleteOne(query);
+      console.log(deleteSp)
+      return deleteSp;
+
+    } catch (error) {
+      console.log(error);
+      throw new Error (error)
+    }
+  }
+
+  module.exports = { 
+    createSpend, 
+    getAllSpends,
+    getSpendsByUser,
+    deleteSpend
+  }

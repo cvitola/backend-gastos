@@ -7,4 +7,8 @@ router.get('/', spendController.getAllSpends);
 
 router.post('/', spendController.createSpend);
 
+router.get('/byuser/:id' , spendController.getSpendsByUser);
+
+router.delete('/:id', spendController.deleteSpend);
+
 module.exports = router;
