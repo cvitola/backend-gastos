@@ -1,4 +1,5 @@
 const getCollection = require("../utils/mongoDBClient").getCollection;
+var mongodb = require('mongodb');
 /*
 {
   id: 4674hgdffy_,
@@ -50,7 +51,7 @@ const createSpend = async (date,category,amount,userID) => {
   const deleteSpend = async(id) => {
     try {
       const spendsCollection = getCollection("gastos");
-      const query = {_id: id}
+      const query = {_id: new mongodb.ObjectID(id)}
       console.log(query)
       const deleteSp = await spendsCollection.deleteOne(query);
       console.log(deleteSp)
